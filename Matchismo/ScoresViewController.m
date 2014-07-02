@@ -2,8 +2,8 @@
 //  ScoresViewController.m
 //  Matchismo
 //
-//  Created by dac duy nguyen on 4/20/14.
-//  Copyright (c) 2014 dac duy nguyen. All rights reserved.
+//  Created 4/20/14.
+// s
 //
 
 #import "ScoresViewController.h"
@@ -16,9 +16,6 @@
 @end
 
 @implementation ScoresViewController
-
-
-
 
 - (NSString *)stringFromResult:(GameResult *)result
 {
@@ -61,7 +58,6 @@
     self.scores = [GameResult allGameResults];
     [self updateUI];
 }
-
 
 - (IBAction)sortByDate {
     self.scores = [self.scores sortedArrayUsingSelector:@selector(compareDate:)];

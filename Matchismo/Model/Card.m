@@ -10,7 +10,6 @@
 
 @implementation Card
 
-
 - (NSUInteger)numberOfMatchingCards
 {
     if (!_numberOfMatchingCards) _numberOfMatchingCards = 2;

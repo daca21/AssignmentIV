@@ -1,14 +1,14 @@
 //
-//  Gamesetting.m
+//  GameSettings.m
 //  Matchismo
 //
-//  Created bon 4/20/14.
-//  
+//  Created by Martin Mandl on 16.11.13.
+//  Copyright (c) 2013 m2m server software gmbh. All rights reserved.
 //
 
-#import "Gamesetting.h"
+#import "GameSettings.h"
 
-@implementation Gamesetting
+@implementation GameSettings
 
 #define GAME_SETTINGS_KEY @"Game_Settings_Key"
 #define MATCHBONUS_KEY @"MatchBonus_Key"
@@ -16,13 +16,9 @@
 #define FLIPCOST_KEY @"FlipCost_Key"
 #define NUMBERPLAYINGCARDS_KEY @"NumberPlayingCards_Key"
 
-
-// getters for those properties access a helper method which accesses the user defaults and if no valid setting is there returns a default value:
-
 - (int)intValueForKey:(NSString *)key withDefault:(int)defaultValue
 {
-    NSDictionary *settings = [[NSUserDefaults standardUserDefaults]
-                              dictionaryForKey:GAME_SETTINGS_KEY];
+    NSDictionary *settings = [[NSUserDefaults standardUserDefaults] dictionaryForKey:GAME_SETTINGS_KEY];
     if (!settings) return defaultValue;
     if (![[settings allKeys] containsObject:key]) return defaultValue;
     return [settings[key] intValue];
@@ -43,13 +39,9 @@
     return [self intValueForKey:FLIPCOST_KEY withDefault:1];
 }
 
-
-//
-//The setters of the settings properties use another helper method to save their values to the user defaults. (In addition the helper method creates a new property list (dictionary) if it has not been initialized, yet):
 - (void)setIntValue:(int)value forKey:(NSString *)key
 {
-    NSMutableDictionary *settings = [[[NSUserDefaults standardUserDefaults]
-                                      dictionaryForKey:GAME_SETTINGS_KEY] mutableCopy];
+    NSMutableDictionary *settings = [[[NSUserDefaults standardUserDefaults] dictionaryForKey:GAME_SETTINGS_KEY] mutableCopy];
     if (!settings) {
         settings = [[NSMutableDictionary alloc] init];
     }

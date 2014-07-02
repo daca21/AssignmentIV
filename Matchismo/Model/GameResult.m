@@ -2,18 +2,11 @@
 //  GameResult.m
 //  Matchismo
 //
-//  Created by dac duy nguyen on 4/20/14.
-//  Copyright (c) 2014 dac duy nguyen. All rights reserved.
+//  Created by Martin Mandl on 15.11.13.
+//  Copyright (c) 2013 m2m server software gmbh. All rights reserved.
 //
 
 #import "GameResult.h"
-
-
-#define ALL_RESULTS_KEY @"GameResult_All"
-#define START_KEY @"StartDate"
-#define END_KEY @"EndDate"
-#define SCORE_KEY @"Score"
-#define GAME_KEY @"Game"
 
 @interface GameResult()
 
@@ -24,26 +17,27 @@
 
 @implementation GameResult
 
+#define ALL_RESULTS_KEY @"GameResult_All"
+#define START_KEY @"StartDate"
+#define END_KEY @"EndDate"
+#define SCORE_KEY @"Score"
+#define GAME_KEY @"Game"
 
--(NSTimeInterval)duration{
+- (NSTimeInterval)duration
+{
     return [self.end timeIntervalSinceDate:self.start];
 }
 
--(void)setScore:(int)score
+- (void)setScore:(int)score
 {
     _score = score;
-    self.end   = [NSDate date];
+    self.end = [NSDate date];
     [self synchronize];
 }
 
-- (id)init
+- (id)asPropertyList
 {
-    self = [super init];
-    if (self) {
-        _start = [NSDate date];
-        _end = _start;
-    }
-    return self;
+    return @{ START_KEY : self.start, END_KEY : self.end, SCORE_KEY : @(self.score), GAME_KEY : self.gameType };
 }
 
 - (void)synchronize
@@ -57,22 +51,14 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
-
-- (id)asPropertyList
+- (id)init
 {
-    return @{ START_KEY : self.start, END_KEY : self.end, SCORE_KEY : @(self.score), GAME_KEY : self.gameType };
-}
-
-
-+ (NSArray *)allGameResults
-{
-    NSMutableArray *allGameResults = [[NSMutableArray alloc] init];
-    for (id plist in [[[NSUserDefaults standardUserDefaults]
-                       dictionaryForKey:ALL_RESULTS_KEY] allValues]) {
-        GameResult *result = [[GameResult alloc] initFromPropertyList:plist];
-        [allGameResults addObject:result];
+    self = [super init];
+    if (self) {
+        _start = [NSDate date];
+        _end = _start;
     }
-    return allGameResults;
+    return self;
 }
 
 - (id)initFromPropertyList:(id)plist
@@ -91,6 +77,18 @@
     return self;
 }
 
++ (NSArray *)allGameResults
+{
+    NSMutableArray *allGameResults = [[NSMutableArray alloc] init];
+    
+    for (id plist in [[[NSUserDefaults standardUserDefaults] dictionaryForKey:ALL_RESULTS_KEY] allValues]) {
+        GameResult *result = [[GameResult alloc] initFromPropertyList:plist];
+        [allGameResults addObject:result];
+    }
+    
+    return allGameResults;
+}
+
 - (NSComparisonResult)compareScore:(GameResult *)result
 {
     return [@(self.score) compare:@(result.score)];
@@ -101,10 +99,9 @@
     return [@(self.duration) compare:@(result.duration)];
 }
 
--(NSComparisonResult) compareDate: (GameResult*) result
+- (NSComparisonResult)compareDate:(GameResult *)result
 {
     return [self.end compare:result.end];
 }
 
 @end
-

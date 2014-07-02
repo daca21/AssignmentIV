@@ -2,8 +2,8 @@
 //  SettingsGameViewController.h
 //  Matchismo
 //
-//  Created by dac duy nguyen on 4/21/14.
-//  Copyright (c) 2014 dac duy nguyen. All rights reserved.
+//  Created  on 4/21/14.
+// 
 //
 
 #import <UIKit/UIKit.h>

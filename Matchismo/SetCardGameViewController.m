@@ -2,15 +2,15 @@
 //  SetCardGameViewController.m
 //  Matchismo
 //
-//  Created by dac duy nguyen on 4/19/14.
-//  Copyright (c) 2014 dac duy nguyen. All rights reserved.
+//  Created by 4/19/14.
+//   
 //
 
 #import "SetCardGameViewController.h"
 #import "CardMatchingGame.h"
 #import "SetCardDeck.h"
 #import "SetCard.h"
-#import "HistoryViewController.h"
+
 
 
 @interface SetCardGameViewController ()
@@ -75,46 +75,7 @@
 }
 
 
-- (NSAttributedString *)replaceCardDescriptionsInText:(NSAttributedString *)text
-{
-    NSMutableAttributedString *newText = [text mutableCopy];
-    
-    NSArray *setCards = [SetCard cardsFromText:text.string];
-    
-    if (setCards) {
-        for (SetCard *setCard in setCards) {
-            NSRange range = [newText.string rangeOfString:setCard.contents];
-            if (range.location != NSNotFound) {
-                [newText replaceCharactersInRange:range
-                             withAttributedString:[self titleForCard:setCard]];
-            }
-        }
-    }
-    return newText;
-}
 
-
-- (void)updateUI
-{
-    [super updateUI];
-//    NSMutableAttributedString *description = [self.flipDescription.attributedText mutableCopy];
-//    NSArray *setCards = [SetCard cardsFromText:description.string];
-//    if (setCards) {
-//        for (SetCard *setCard in setCards) {
-//            NSRange range = [description.string rangeOfString:setCard.contents];
-//            if (range.location != NSNotFound) {
-//                [description replaceCharactersInRange:range
-//                                 withAttributedString:[self titleForCard:setCard]];
-//            }
-//        }
-//        [self.flipDescription setAttributedText:description];
-//    }  //-> see helper method :replaceCardDescriptionsInText
-    
-    [super updateUI];
-    
-    self.flipDescription.attributedText = [self replaceCardDescriptionsInText:self.flipDescription.attributedText];
-    
-}
 
 - (void)viewDidLoad
 {
@@ -123,21 +84,6 @@
 }
 
 
--(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
-{
-    if ([segue.identifier isEqualToString:@"Show History"]) {
-        if ([segue.destinationViewController isKindOfClass:[HistoryViewController class]]) {
-            NSMutableArray *attributedHistory = [NSMutableArray array];
-            for(NSString *flip in self.flipHistory){
-                NSAttributedString *attributedFlip = [[NSAttributedString alloc] initWithString:flip];
-                [attributedHistory addObject:[self replaceCardDescriptionsInText:attributedFlip]];
-                
-            }
-            [segue.destinationViewController setHistory:attributedHistory];
-            
-        }
-    }
-}
 
 
 @end

@@ -2,8 +2,8 @@
 //  GameResult.h
 //  Matchismo
 //
-//  Created by dac duy nguyen on 4/20/14.
-//  Copyright (c) 2014 dac duy nguyen. All rights reserved.
+//  Created by Martin Mandl on 15.11.13.
+//  Copyright (c) 2013 m2m server software gmbh. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
